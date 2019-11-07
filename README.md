@@ -1,4 +1,4 @@
-# GLPI Actice Scanner
+# GLPI Active Scanner
 
 GLPI-Checker is a tool to check:
 
