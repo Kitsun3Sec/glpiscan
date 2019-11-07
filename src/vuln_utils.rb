@@ -24,7 +24,14 @@ def dir_testing(url)
 	end
 end
 
+def enumerate_users
+puts "TO DO"
+end
+
 def sensitive_files(url)
 	response = Net::HTTP.get_response("#{url}", '/glpi/files/_log/event.log')
-	puts " [-]".red.bold  << " The file is available" if (response.code == "200")
+	if (response.code == "200")
+		puts " [-]".red.bold  << " The file is available"
+		enumerate_users
+	end
 end
