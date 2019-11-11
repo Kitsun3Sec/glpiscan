@@ -16,22 +16,36 @@ def dir_testing(url)
 	if (xml_response == "Index of /glpi/config")
 		puts " [-] ".red.bold << "Directory List"
 		puts "  [+] ".red << "Interesting folders"
-		puts "   [+] ".red <<  "/glpi/files/_dumps > Database dump"
-		puts "   [+] ".red <<  "/glpi/files/_sessions"
-		puts "   [+] ".red <<  "/glpi/files/_uploads"
+		puts "   [+] ".red <<  "/glpi/files/_dumps > Database dump".yellow
+		puts "   [+] ".red <<  "/glpi/files/_sessions".yellow
+		puts "   [+] ".red <<  "/glpi/files/_uploads".yellow
 	else
-		puts "No directory Listing"
+		puts "No directory Listing - [OK]".green
 	end
 end
 
-def enumerate_users
-puts "TO DO"
+def enumerate_users(url)
+	puts "  [+]".red << " Username Enumeration".yellow
+	file = do_request(url, '/glpi/files/_log/event.log')
+	
+	f = File.new("username_list", "w")
+	f.puts file
+	f.close
+	
+	system("cat username_list | grep log | cut -d ' ' -f 3 | sort | uniq > a")
+	f = File.read("a")
+	
+	f.each_line {|user| print "    #{user}".yellow.bold}
+	File.delete("a")
+	File.delete("username_list")
 end
 
 def sensitive_files(url)
 	response = Net::HTTP.get_response("#{url}", '/glpi/files/_log/event.log')
 	if (response.code == "200")
 		puts " [-]".red.bold  << " The file is available"
-		enumerate_users
+		enumerate_users(url)
+		elsif (response.code == "401")
+			puts "The file is not available! [ OK]"
 	end
 end
