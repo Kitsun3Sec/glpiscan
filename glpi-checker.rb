@@ -19,5 +19,8 @@ system_info(url)
 puts "\n[+] Testing directory listing ".green
 dir_testing(url)
 
+puts "\n[+] Searching for CVE".green
+search_cve(url)
+
 puts "\n[+] Searching for sensitive files ".green
 sensitive_files(url)

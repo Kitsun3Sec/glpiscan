@@ -1,11 +1,15 @@
+def get_glpi_version(url)
+	glpi_version = do_request(url, '/glpi/CHANGELOG.md')
+	glpi_version = get_element(glpi_version, '//p').to_s.split("\n\n").grep(/unreleased$/).to_s.split[1]
+
+end
+
 def system_info(url)
 	xml_response = do_request(url, '/glpi/config')
 	address = get_element(xml_response, 'address')
 	puts 'Server: '.red << address.split[0]
 	puts 'SO: '.red << address.split[1]
-
-	glpi_version = do_request(url, '/glpi/CHANGELOG.md')
-	glpi_version = get_element(glpi_version, '//p').to_s.split("\n\n").grep(/unreleased$/).to_s.split[1]
+	glpi_version = get_glpi_version(url)
 	puts 'GLPI version: '.red << glpi_version
 end
 
@@ -48,4 +52,17 @@ def sensitive_files(url)
 		elsif (response.code == "401")
 			puts "The file is not available! [ OK]"
 	end
+end
+
+@known_vulnerabilities = {
+	"9.4.4" => "No public vuln yet",
+	"0.83.3" => "[ CVE-2012-4003 ] \nMultiple cross-site scripting (XSS) vulnerabilities in GLPI-PROJECT GLPI before 0.83.3 allow remote attackers to inject arbitrary web script or HTML via unknown vectors.
+",
+	"0.80.2" => "[ CVE-2011-2720 ] \nThe autocompletion functionality in GLPI before 0.80.2 does not blacklist certain username and password fields, which allows remote attackers to obtain sensitive information via a crafted POST request."
+}
+
+def search_cve(url)
+	glpi_version = get_glpi_version(url)
+	glpi_version = glpi_version.tr('[]', '')
+	puts @known_vulnerabilities.fetch("#{glpi_version}")
 end
