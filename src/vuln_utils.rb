@@ -36,7 +36,7 @@ def enumerate_users(url)
 	f.puts file
 	f.close
 	
-	system("cat username_list | grep log | cut -d ' ' -f 3 | sort | uniq > a")
+	system("cat username_list | grep 'log in' | cut -d ' ' -f 3 | sort | uniq > a")
 	f = File.read("a")
 	
 	f.each_line {|user| print "    #{user}".yellow.bold}
@@ -47,19 +47,12 @@ end
 def sensitive_files(url)
 	response = Net::HTTP.get_response("#{url}", '/glpi/files/_log/event.log')
 	if (response.code == "200")
-		puts " [-]".red.bold  << " The file is available"
+		puts " [-]".red.bold  << " The file event.log is available"
 		enumerate_users(url)
 		elsif (response.code == "401")
-			puts "The file is not available! [ OK]"
+			puts "The file event.log is not available! [ OK]"
 	end
 end
-
-@known_vulnerabilities = {
-	"9.4.4" => "No public vuln yet",
-	"0.83.3" => "[ CVE-2012-4003 ] \nMultiple cross-site scripting (XSS) vulnerabilities in GLPI-PROJECT GLPI before 0.83.3 allow remote attackers to inject arbitrary web script or HTML via unknown vectors.
-",
-	"0.80.2" => "[ CVE-2011-2720 ] \nThe autocompletion functionality in GLPI before 0.80.2 does not blacklist certain username and password fields, which allows remote attackers to obtain sensitive information via a crafted POST request."
-}
 
 def search_cve(url)
 	glpi_version = get_glpi_version(url)
