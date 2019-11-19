@@ -5,7 +5,7 @@ require 'open-uri'
 require 'net/http'
 
 def do_request(url, path)
-	xml_response = Nokogiri::HTML.parse(open("http://#{url+path}"))
+    Nokogiri::HTML.parse(open("http://#{url+path}"))
 end
 
 def sensitive_files
