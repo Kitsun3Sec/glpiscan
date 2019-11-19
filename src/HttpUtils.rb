@@ -1,17 +1,27 @@
 require 'nokogiri'
 require 'open-uri'
+require 'uri'
 
 class HttpUtils
     @response
     @sensitive_files = 'event.log'
+    @proxy
 
-    def self.request(url)
-        @response = open("#{url+path}")
-        Nokogiri::HTML.parse(@response)
-    end
-
-    def self.request(url)
-        @response = open("#{url}")
+    def self.request(*args)
+        case args.size
+            when 1
+                @response = open("#{args[0]}")
+            when 2
+                begin
+                    if args[1] =~ URI::regexp
+                        @response = open("#{args[0]}", :proxy => args[1])
+                    else
+                        @response = open("#{args[0]+args[1]}")
+                    end
+                end
+            when 3
+                @response = open("#{args[0]+args[1]}", :proxy => args[2])
+        end
         Nokogiri::HTML.parse(@response)
     end
 
