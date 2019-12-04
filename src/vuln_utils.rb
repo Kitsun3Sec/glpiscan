@@ -1,7 +1,6 @@
 def get_glpi_version(url)
 	glpi_version = do_request(url, '/glpi/CHANGELOG.md')
 	glpi_version = get_element(glpi_version, '//p').to_s.split("\n\n").grep(/unreleased$/).to_s.split[1]
-
 end
 
 def system_info(url)
