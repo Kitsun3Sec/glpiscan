@@ -1,6 +1,6 @@
 # GLPI Active Scanner
 
-GLPI-Checker is a scanner to find vulnerabilities into glpi platforms. GLPI is usually used internally, almost never you'll find opened to the internet ( but is possible ).
+GLPIScan is a scanner to find vulnerabilities into glpi platforms. GLPI is usually used internally, almost never you'll find opened to the internet ( but is possible ).
 
 ## What's GLPI ?
 
@@ -19,13 +19,13 @@ GLPI is an incredible ITSM software tool that helps you plan and manage IT chang
 ## how to install
 
 ```bash
-git clone https://github.com/Kitsun3Sec/glpi-checker.git
-cd glpi-checker
+git clone https://github.com/Kitsun3Sec/glpiscan.git
+cd glpiscan
 bundle install
 ```
 
 ## Usage
 
 ```bash
-./glpi-checker.rb TARGET 
+./glpiscan.rb TARGET 
 ```
