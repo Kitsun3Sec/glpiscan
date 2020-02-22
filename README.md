@@ -1,4 +1,5 @@
-# GLPI Active Scanner
+#
+GLPI Active Scanner
 
 GLPIScan is a scanner to find vulnerabilities into glpi platforms. GLPI is usually used internally, almost never you'll find opened to the internet ( but is possible ).
 
@@ -10,8 +11,8 @@ GLPI is an incredible ITSM software tool that helps you plan and manage IT chang
 
 1. Misconfiguration
 2. User Enumeration
-3. SQL dumps ( it's possible to clone the target)
-4. Default credentials
+3. SQL dumps ( it's possible to clone the target) TODO!
+4. Default credentials TODO!
 5. Vulnerable versions
 6. System information as OS and Web Server
 
